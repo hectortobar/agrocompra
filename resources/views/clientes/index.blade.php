@@ -26,6 +26,13 @@
                         </div>
                     @endif
 
+                    {{-- Paso 7: mensaje de confirmación al actualizar --}}
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
                             <thead class="table-light">
@@ -44,7 +51,15 @@
                                         <td>{{ $cliente->correo }}</td>
                                         <td>{{ $cliente->telefono }}</td>
                                         <td>{{ $cliente->ciudad }}</td>
-                                        <td>{{ Str::limit($cliente->mensaje, 30) }}</td>
+                                        <td>
+                                            {{ Str::limit($cliente->mensaje, 30) }}
+
+                                            <a
+                                                href="{{ route('clientes.edit', $cliente) }}"
+                                                class="btn btn-warning btn-sm">
+                                                Editar
+                                            </a>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>

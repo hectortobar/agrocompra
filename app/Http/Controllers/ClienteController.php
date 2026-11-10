@@ -37,4 +37,28 @@ class ClienteController extends Controller
             ->route('clientes.index')
             ->with('exito', 'Cliente registrado correctamente.');
     }
+    
+    public function edit(Cliente $cliente)
+    {
+        return view('clientes.edit', compact('cliente'));
+    }
+
+    public function update(Request $request, Cliente $cliente)
+   {
+       $datos = $request->validate([
+         'nombre' => ['required', 'string', 'max:100'],
+         'correo' => ['required', 'email', 'max:150'],
+         'telefono' => ['required', 'string', 'max:20'],
+         'ciudad' => ['required', 'string', 'max:100'],
+         'mensaje' => ['nullable', 'string', 'max:500'],
+        ]);
+
+       $cliente->update($datos);
+
+        return redirect()
+        ->route('clientes.index')
+        ->with('success', 'Cliente actualizado correctamente.');
+    }
+
+
 }

@@ -92,23 +92,70 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a
-                            class="nav-link {{ request()->routeIs('clientes.index') ? 'active' : '' }}"
-                            href="{{ route('clientes.index') }}"
-                        >
-                            <i class="bi bi-people me-1"></i> Clientes
-                        </a>
-                    </li>
+                    @auth
+                        <li class="nav-item">
+                            <a
+                                class="nav-link {{ request()->routeIs('clientes.index') ? 'active' : '' }}"
+                                href="{{ route('clientes.index') }}"
+                            >
+                                <i class="bi bi-people me-1"></i> Clientes
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a
-                            class="nav-link {{ request()->routeIs('productos.*') ? 'active' : '' }}"
-                            href="{{ route('productos.index') }}"
-                        >
-                            <i class="bi bi-box-seam me-1"></i> Productos
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a
+                                class="nav-link {{ request()->routeIs('productos.*') ? 'active' : '' }}"
+                                href="{{ route('productos.index') }}"
+                            >
+                                <i class="bi bi-box-seam me-1"></i> Productos
+                            </a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('dashboard') }}">Mi panel</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">Perfil</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a
+                                class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}"
+                                href="{{ route('login') }}"
+                            >
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar sesión
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a
+                                class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}"
+                                href="{{ route('register') }}"
+                            >
+                                <i class="bi bi-person-plus me-1"></i> Registrarse
+                            </a>
+                        </li>
+                    @endauth
 
                 </ul>
             </div>
